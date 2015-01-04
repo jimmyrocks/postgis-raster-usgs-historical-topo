@@ -12,6 +12,11 @@ meter_pixelsY=25
 # ##############
 # ##############
 
+if [ -n "$1"]; then
+  echo "USAGE: import_raster.sh GeoPDF_FILE"
+  exit 1;
+fi
+
 # Setting up paths #
 original_path="$1"
 raster_filename="${original_path##*/}"
