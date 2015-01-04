@@ -8,18 +8,18 @@ utmZone="18"
 srs="+proj=utm +zone=$utmZone +datum=NAD83"
 epsg_srs="26918"
 tile="256x256"
-dpi=100
+dpi=75
 # ##############
 # ##############
 # ##############
 
 # Setting up paths #
-original_path=$1
+original_path="$1"
 raster_filename="${original_path##*/}"
 tablename="${raster_filename%.*}"
 tablename="${tablename,,}"
 
-neatline=`gdalinfo $original_path | grep NEATLINE | perl -p -e 's/\s+?NEATLINE=//g'`
+neatline=`gdalinfo "$original_path" | grep NEATLINE | perl -p -e 's/\s+?NEATLINE=//g'`
 extent_sql="SELECT ST_Extent(ST_PolygonFromText('$neatline'));"
 st_extent=`sudo -u postgres psql -d "$geodatabase_name" -Atc "$extent_sql"`
 extent=`echo "$st_extent" | perl -p -e 's/BOX\(([0-9.-]{1,})\s([0-9.-]{1,}),([0-9.-]{1,}) ([0-9.-]{1,})\)/$1 $4 $3 $2/g'`
@@ -36,8 +36,8 @@ function clip_neatline {
 
   clipped_filename="${original_path%.*}"_clip.tif
   gdal_translate -projwin $extent -of GTiff "$current_file_path" "$clipped_filename" --config GDAL_PDF_DPI $dpi
-  rm $current_file_path
-  current_file_path=$clipped_filename
+  rm "$current_file_path"
+  current_file_path="$clipped_filename"
 }
 
 function project_file {
@@ -46,7 +46,7 @@ function project_file {
   projected_filename="${original_path%.*}"_utm.tif
   gdalwarp -t_srs "$srs" "$current_file_path" "$projected_filename"
   rm "$current_file_path"
-  current_file_path=$projected_filename
+  current_file_path="$projected_filename"
 }
 
 function insert_map {
