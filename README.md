@@ -20,6 +20,6 @@ This document helped me get a start on this project.
 7. Download a USGS topo map (you can use [this one of Lambertville, NJ](http://ims.er.usgs.gov/gda_services/download?item_id=5377298) if you'd like)
 8. Run the import_zip.sh script on the zip file. Example:
    `bash ./import_zip.sh ./NJ_Lambertville_255237_1890_62500_geo.zip`
-9. The raster should now be in your database! Getting the data out can be tricky, but there's (a guide)[http://postgis.net/docs/using_raster_dataman.html#RasterOutput_PSQL] on it.
+9. The raster should now be in your database! Getting the data out can be tricky, but there's [a guide](http://postgis.net/docs/using_raster_dataman.html#RasterOutput_PSQL) on it.
 
 Enjoy!
