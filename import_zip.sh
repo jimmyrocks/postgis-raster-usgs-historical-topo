@@ -7,5 +7,6 @@ zip_name="${zip_path##*/}"
 temp_path="${zip_path%/*}"/.tmp_"${zip_name%.*}"
 
 unzip "$zip_path" -d "$temp_path" && \
-  /bin/bash "$import_raster" "`ls | /bin/grep .pdf`" && \
-  rm -rf $temp_path
+  /bin/bash "$import_raster" "$temp_path"/"`ls \"$temp_path\" | /bin/grep .pdf`"
+
+rm -rf $temp_path
